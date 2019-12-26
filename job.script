@@ -1,0 +1,15 @@
+#!/bin/csh
+
+# I pip installed:
+# pip install numpy (1.17.4)
+# pip install --user tensorflow-gpu
+
+#$ -M ptinsley@nd.edu   # job notification
+#$ -m abe               # mail on end
+#$ -q gpu               # queue
+#$ -l gpu_card=1        # num_gpus
+#$ -N stylegan_tour     # job name
+
+module load python/3.6.4
+python3 --version
+
