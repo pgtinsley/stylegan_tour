@@ -30,7 +30,7 @@ import face_recognition
 
 # Plotting
 import matplotlib.pyplot as plt
-# get_ipython().run_line_magic('matplotlib', 'inline')
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -90,7 +90,7 @@ def setup():
 # vec.shape
 
 
-# In[5]:
+# In[6]:
 
 
 def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
@@ -155,31 +155,31 @@ def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
         return_dict[str(magnitude)]['sg_distances'] = sg_distances
         return_dict[str(magnitude)]['fr_distances'] = fr_distances        
     
-    with open('axis{}.avi'.format(axis), 'wb') as f:
+    with open(pkl_fname, 'wb') as f:
         pickle.dump(return_dict, f)
     
 #     return return_dict
 
 
-# In[11]:
+# In[7]:
 
 
 dirnames = os.listdir('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/')
 
 
-# In[12]:
+# In[8]:
 
 
 len(dirnames)
 
 
-# In[13]:
+# In[9]:
 
 
 dirnames[0:5]
 
 
-# In[15]:
+# In[11]:
 
 
 for dirname in dirnames:
@@ -187,12 +187,13 @@ for dirname in dirnames:
     vec = np.load('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy')
     
     for a in range(18):
-        p_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
-        
-        if not os.path.exists(p_fname):
-            mc_perturb(vec, axis=a, pkl_fname=p_fname)
+        pkl_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
+#         print(pkl_fname)
+        if not os.path.exists(pkl_fname):
+            print('mc_perturb to create '+pkl_fname)
+#             mc_perturb(vec, axis=a, pkl_fname)
         else:
-            print(p_fname + ' already exists')
+            print(pkl_fname + ' already exists')
 
 
 # In[ ]:
