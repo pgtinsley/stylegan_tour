@@ -30,7 +30,7 @@ import face_recognition
 
 # Plotting
 import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -187,12 +187,12 @@ for dirname in dirnames:
     vec = np.load('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy')
     
     for a in range(18):
-        pkl_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
+        p_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
         
-        if not os.path.exists(pkl_fname):
-            mc_perturb(vec, axis=a, pkl_fname)
+        if not os.path.exists(p_fname):
+            mc_perturb(vec, axis=a, pkl_fname=p_fname)
         else:
-            print(pkl_fname + ' already exists')
+            print(p_fname + ' already exists')
 
 
 # In[ ]:
