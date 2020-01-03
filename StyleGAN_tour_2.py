@@ -3,7 +3,7 @@
 
 # ### Let's go on a tour of the StyleGAN latent space.
 
-# In[1]:
+# In[ ]:
 
 
 import cv2
@@ -35,7 +35,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 from PIL import Image, ImageDraw, ImageFont
 
 
-# In[2]:
+# In[ ]:
 
 
 # Plot latent vectors of shape 18x512
@@ -47,7 +47,7 @@ def generate_image(latent_vector):
     return img.resize((1024, 1024))
 
 
-# In[3]:
+# In[ ]:
 
 
 def setup():
@@ -61,7 +61,7 @@ def setup():
     return [_G, _D, Gs, generator, fmt]
 
 
-# In[4]:
+# In[ ]:
 
 
 # Only run once.
@@ -90,7 +90,7 @@ def setup():
 # vec.shape
 
 
-# In[6]:
+# In[ ]:
 
 
 def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
@@ -161,37 +161,34 @@ def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
 #     return return_dict
 
 
-# In[7]:
+# In[ ]:
 
 
 dirnames = os.listdir('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/')
 
 
-# In[8]:
+# In[ ]:
 
 
 len(dirnames)
 
 
-# In[9]:
+# In[ ]:
 
 
-dirnames[0:5]
+# dirnames[0:5]
 
 
-# In[11]:
+# In[ ]:
 
 
 for dirname in dirnames:
-    
     vec = np.load('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy')
-    
     for a in range(18):
         pkl_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
-#         print(pkl_fname)
         if not os.path.exists(pkl_fname):
-            print('mc_perturb to create '+pkl_fname)
-#             mc_perturb(vec, axis=a, pkl_fname)
+            print('mc_perturb-ing to create '+pkl_fname)
+            mc_perturb(vec, axis=a, pkl_fname)
         else:
             print(pkl_fname + ' already exists')
 
