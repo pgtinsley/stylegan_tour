@@ -401,6 +401,7 @@ class Network:
         # Build graph.
         if key not in self._run_cache:
             with tfutil.absolute_name_scope(self.scope + "/_Run"), tf.control_dependencies(None):
+                
                 if custom_inputs is not None:
                     with tf.device("/gpu:0"):
                         in_expr = [input_builder(name) for input_builder, name in zip(custom_inputs, self.input_names)]
@@ -436,6 +437,8 @@ class Network:
                 with tf.device("/cpu:0"):
                     out_expr = [tf.concat(outputs, axis=0) for outputs in zip(*out_split)]
                     self._run_cache[key] = in_expr, out_expr
+
+        print('After')
 
         # Run minibatches.
         in_expr, out_expr = self._run_cache[key]
