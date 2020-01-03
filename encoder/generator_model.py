@@ -26,7 +26,8 @@ class Generator:
                                                       partial(create_stub, batch_size=batch_size)],
                                        structure='fixed')
 
-        self.sess = tf.get_default_session()
+        # self.sess = tf.get_default_session()
+        self.sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True)) # new
         self.graph = tf.get_default_graph()
 
         self.dlatent_variable = next(v for v in tf.global_variables() if 'learnable_dlatents' in v.name)
