@@ -185,12 +185,12 @@ len(dirnames)
 for dirname in dirnames:
     vec = np.load('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy')
     for a in range(18):
-        pkl_fname = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
-        if not os.path.exists(pkl_fname):
-            print('mc_perturb-ing to create '+pkl_fname)
-            mc_perturb(vec, axis=a, pkl_fname)
+        pkl_fname2 = '../data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
+        if not os.path.exists(pkl_fname2):
+            print('mc_perturb-ing to create '+pkl_fname2)
+            mc_perturb(vec, axis=a, pkl_fname=pkl_fname2)
         else:
-            print(pkl_fname + ' already exists')
+            print(pkl_fname2 + ' already exists')
 
 
 # In[ ]:
