@@ -438,8 +438,6 @@ class Network:
                     out_expr = [tf.concat(outputs, axis=0) for outputs in zip(*out_split)]
                     self._run_cache[key] = in_expr, out_expr
 
-        print('After')
-
         # Run minibatches.
         in_expr, out_expr = self._run_cache[key]
         out_arrays = [np.empty([num_items] + tfutil.shape_to_list(expr.shape)[1:], expr.dtype.name) for expr in out_expr]

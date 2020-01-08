@@ -122,7 +122,7 @@ def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
         for i in range(100):
                 
             # Assign random state.
-            rnd = np.random.RandomState(i)
+            rnd = np.random.RandomState(None)
             
             # Perturb specified axis in new vector.
             new_vector[axis] = new_vector[axis] + magnitude * rnd.randn(Gs.input_shape[1])
