@@ -1,3 +1,7 @@
 *.pickle
+raw_images/
+aligned_images/
+generated_images/
+latent_representations/
 .DS_Store
 /cache/*
