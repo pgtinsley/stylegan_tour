@@ -182,7 +182,7 @@ len(dirnames)
 # In[ ]:
 
 #### ADDED
-dirnames = [sys.argv[1]]
+# dirnames = [sys.argv[1]]
 ####
 
 for dirname in dirnames:
