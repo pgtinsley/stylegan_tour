@@ -3,5 +3,9 @@ raw_images/
 aligned_images/
 generated_images/
 latent_representations/
+raw_images_old/
+aligned_images_old/
+generated_images_old/
+latent_representations_old/
 .DS_Store
 /cache/*
