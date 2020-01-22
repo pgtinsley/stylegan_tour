@@ -164,13 +164,14 @@ def mc_perturb(base_vector, axis, pkl_fname, magnitudes=[0.05, 0.1, 0.5, 1, 5]):
 # In[ ]:
 
 # dirnames = os.listdir('../data/FRGC/FRGC-2.0-dist/nd1/custom_100/') # ZAPPA
-dirnames = os.listdir('./data/FRGC/FRGC-2.0-dist/nd1/custom_100/') # CRC
+# dirnames = os.listdir('./data/FRGC/FRGC-2.0-dist/nd1/custom_100/') # CRC
+dirnames = os.listdir('./data3/') # CRC -- lower res images
 
 
 # In[ ]:
 
 
-len(dirnames)
+# len(dirnames)
 
 
 # In[ ]:
@@ -182,13 +183,15 @@ len(dirnames)
 # In[ ]:
 
 #### ADDED
-# dirnames = [sys.argv[1]]
+dirnames = dirnames[int(sys.argv[1]): int(sys.argv[2])]
 ####
 
 for dirname in dirnames:
-    vec = np.load('./data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy')
+#     vec = np.load('./data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_01.npy') # CRC high res
+    vec = np.load('./data3/' + dirname + '/' + dirname + '_01.npy') # CRC lower res images
     for a in range(18):
-        pkl_fname2 = './data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl'
+#         pkl_fname2 = './data/FRGC/FRGC-2.0-dist/nd1/custom_100/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl' # CRC high res
+        pkl_fname2 = './data3/' + dirname + '/' + dirname + '_axis' + str(a) + '.pkl' # CRC lower res images
         if not os.path.exists(pkl_fname2):
             print('mc_perturb-ing to create '+pkl_fname2)
             mc_perturb(vec, axis=a, pkl_fname=pkl_fname2)
