@@ -46,44 +46,58 @@ def generate_image(latent_vector):
     img = PIL.Image.fromarray(img_array, 'RGB')
     return img.resize((1024, 1024))
 
-
-# def generate_perturbed_image(latent_vector, axis, magnitude):
-#     latent_vector_cp = np.copy(latent_vector)
-#     rnd = np.random.RandomState(None)
-#     latent_vector_cp[axis] = latent_vector_cp[axis] + magnitude * rnd.randn(Gs.input_shape[1])    
-#     latent_vector_cp = latent_vector_cp.reshape((1, 18, 512))
-#     generator.set_dlatents(latent_vector_cp)
-#     img_array = generator.generate_images()[0]
-#     img = PIL.Image.fromarray(img_array, 'RGB')
-#     return img.resize((1024, 1024))
-
 def synthesize_images(dirname):
+
+    # Get base_vector.
+    base_vector = np.load('../data2/' + dirname + '/' + dirname + '_01.npy')
     
-    vec = np.load('../data2/' + dirname + '/' + dirname + '_01.npy')
-    new_vector = np.copy(vec)
-    
+    # Get zdict.
     with open('../data2/'+dirname+'/_zdict.pickle', 'rb') as f:
         zdict = pickle.load(f)
+    
+    # Get mean_df.
     df = zdict['mean_df']
     
-    images = {}
-    for i, row in df.iterrows():
-        for j, val in row.iteritems():
-            if val<=0.6: 
-                # What do we want to do with the good combinations?
-                # - Synthesize some data.                
-                for k in range(5):
-                    print(i, j, k)
+    # Get good_tuples.
+    good_tuples = []
+    for idx, row in df.iterrows():
+        for j in range(len(row)):
+            if row[j] <= 0.6:
+                good_tuples.append((idx,df.columns[j]))
+    
+    synthetic_images = {}
+    
+    # Loop over good_tuples.
+    for tup in good_tuples:
+        print(tup)
+        
+        # Break tuple into axis and magnitude.
+        axis = tup[0]
+        magnitude = float(tup[1])
+        
+        # 5 Synthetic images per 'good' tuple.
+        for n in range(5):
+            
+            # print(n)
+    
+            # Copy base vector. 
+            new_vector = np.copy(base_vector)
 
-                    rnd = np.random.RandomState(None)
-                    new_vector[i] = new_vector[i] + float(j) * rnd.randn(Gs.input_shape[1])
-                    img = generate_image(new_vector)
-                    
-                    images[i,j, k] = img
-            else:
-                continue
-                
-    return images
+            # Assign random state.
+            rnd = np.random.RandomState(None)
+            
+            # Perturb specified axis in new vector.
+            new_vector[axis] = new_vector[axis] + magnitude * rnd.randn(Gs.input_shape[1])
+
+            # Get new image.
+            new_image = generate_image(new_vector)
+            
+            # Save image.
+            synthetic_images[(axis, magnitude, n)] = new_image
+         
+    # Save images dictionary.
+    with open('../data2/'+dirname+'/_images.pkl', 'wb') as f:
+        pickle.dump(synthetic_images, f)
 
 # In[ ]:
 
@@ -218,17 +232,17 @@ dirnames = os.listdir('../data2/') # ZAPPA
 # In[ ]:
 
 #### ADDED
-dirnames = dirnames[int(sys.argv[1]): int(sys.argv[2])]
+# dirnames = dirnames[int(sys.argv[1]): int(sys.argv[2])]
 
 for dirname in dirnames:
     
-    if not os.path.exists('../data2/'+dirname+'/_images.pickle'):
+    if not os.path.exists('../data2/'+dirname+'/_images.pkl'):
         print('Synthesizing images for '+dirname)
-        images = synthesize_images(dirname)
-        with open('../data2/'+dirname+'/_images.pickle', 'wb') as f:
-            pickle.dump(images, f)
+        synthesize_images(dirname)
+#         with open('../data2/'+dirname+'/_images.pickle', 'wb') as f:
+#             pickle.dump(images, f)
     else:
-        print('../data2/'+dirname+'/_images.pickle already exists.')
+        print('../data2/'+dirname+'/_images.pkl already exists.')
 
     
 #     print('synthesizing images for ' + dirname)
