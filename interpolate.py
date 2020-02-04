@@ -82,8 +82,8 @@ def setup():
 def interpolate(dirname1, dirname2, steps=60):
 
     # Load and convert latent vectors.
-    vec1 = np.load('./data2/'+dirname1+'/'+dirname1+'_01.npy')
-    vec2 = np.load('./data2/'+dirname2+'/'+dirname2+'_01.npy')
+    vec1 = np.load('../data_100_hr/'+dirname1+'/'+dirname1+'_01.npy')
+    vec2 = np.load('../data_100_hr/'+dirname2+'/'+dirname2+'_01.npy')
 
     vec1_slim = np.reshape(vec1, [1, vec1.shape[0] * vec1.shape[1]])
     vec2_slim = np.reshape(vec2, [1, vec2.shape[0] * vec2.shape[1]])
@@ -91,8 +91,8 @@ def interpolate(dirname1, dirname2, steps=60):
 #     print(vec1_slim.shape, vec2_slim.shape)
     
     # Load and learn encodings from raw images.  
-    img1 = face_recognition.load_image_file('./data2/'+dirname1+'/'+dirname1+'.JPG')
-    img2 = face_recognition.load_image_file('./data2/'+dirname2+'/'+dirname2+'.JPG')
+    img1 = face_recognition.load_image_file('../data_100_hr/'+dirname1+'/'+dirname1+'.JPG')
+    img2 = face_recognition.load_image_file('../data_100_hr/'+dirname2+'/'+dirname2+'.JPG')
     
     enc1 = face_recognition.face_encodings(img1)[0]
     enc2 = face_recognition.face_encodings(img2)[0]
@@ -115,7 +115,7 @@ def interpolate(dirname1, dirname2, steps=60):
         curr_vec = np.reshape(z[i], [18, 512]) # back to original shape
         curr_img = generate_image(curr_vec)
         
-        curr_enc = face_recognition.face_encodings(np.array(curr_img))[0]
+        curr_enc = face_recognition.face_encodings(curr_img)[0]
         distance = face_recognition.face_distance(known_encodings, curr_enc)
         
         images.append(np.array(curr_img))
@@ -133,23 +133,20 @@ def interpolate(dirname1, dirname2, steps=60):
 
 
 return_dict = interpolate('02463d214', '04201d96')
-with open('return_dict.pkl', 'wb') as f:
-	pickle.dump(return_dict, f)
 
 
 # In[ ]:
 
 
-# images = return_dict['images']
+images = return_dict['images']
 
 
 # In[ ]:
 
 
-# s = images[0].shape
-# steps = 60
-# videowriter =  cv2.VideoWriter('interpolate_test.avi', cv2.VideoWriter_fourcc(*'mp4v'), steps/10, (s[1], s[0]))
-# for i in range(len(images)):
-#     videowriter.write(images[i][...,::-1])
-# videowriter.release()
+s = images[0].shape
+videowriter =  cv2.VideoWriter('interpolate_test.avi', cv2.VideoWriter_fourcc(*'mp4v'), steps/10, (s[1], s[0]))
+for i in range(len(images)):
+    videowriter.write(images[i][...,::-1])
+videowriter.release()
 
