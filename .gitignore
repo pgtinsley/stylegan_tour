@@ -3,6 +3,7 @@ raw_images/
 raw_images_lr/
 raw_images_hr/
 aligned_images/
+aligned_images_old/
 aligned_images_lr/
 aligned_images_hr/
 generated_images/
