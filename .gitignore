@@ -1,4 +1,5 @@
 *.pickle
+*.pkl
 raw_images/
 raw_images_lr/
 raw_images_hr/
