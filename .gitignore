@@ -16,3 +16,4 @@ latent_representations_hr/
 .DS_Store
 /cache/*
 zappa_results/
+crc_results/

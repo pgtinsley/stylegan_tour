@@ -86,10 +86,10 @@ def interpolate(root1, root2, steps=60):
     img1 = face_recognition.load_image_file('./aligned_images/'+root1+'_01.png')
     img2 = face_recognition.load_image_file('./aligned_images/'+root2+'_01.png')
     
-    #enc1 = face_recognition.face_encodings(img1)[0]
-    #enc2 = face_recognition.face_encodings(img2)[0]
-    enc1 = np.random.random(128)
-    enc2 = np.random.random(128)
+    enc1 = face_recognition.face_encodings(img1)[0]
+    enc2 = face_recognition.face_encodings(img2)[0]
+    #enc1 = np.random.random(128)
+    #enc2 = np.random.random(128)
     
     known_encodings = [enc1, enc2]
     
@@ -105,8 +105,8 @@ def interpolate(root1, root2, steps=60):
         curr_vec = np.reshape(z[i], [18, 512]) # back to original shape
         curr_img = np.array(generate_image(curr_vec))
         
-        #curr_enc = face_recognition.face_encodings(curr_img)[0]
-        curr_enc = np.random.random(128)
+        curr_enc = face_recognition.face_encodings(curr_img)[0]
+        #curr_enc = np.random.random(128)
         fr_distance = face_recognition.face_distance(known_encodings, curr_enc)
         
         images.append(np.array(curr_img))
@@ -125,7 +125,7 @@ def interpolate(root1, root2, steps=60):
 # In[ ]:
 
 
-return_dict = interpolate('04557d14_hr', '04558d30_hr')
+# return_dict = interpolate('04557d14_hr', '04558d30_hr')
 
 
 # In[ ]:
